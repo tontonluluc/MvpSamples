@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	tools:context="com.planetfocus.mvpsamples.WeatherActivity">
+
+	<!--<TextView-->
+	<!--android:layout_width="wrap_content"-->
+	<!--android:layout_height="wrap_content"-->
+	<!--android:text="Hello World!"-->
+	<!--app:layout_constraintBottom_toBottomOf="parent"-->
+	<!--app:layout_constraintLeft_toLeftOf="parent"-->
+	<!--app:layout_constraintRight_toRightOf="parent"-->
+	<!--app:layout_constraintTop_toTopOf="parent"-->
+	<!--tools:layout_constraintBottom_creator="1"-->
+	<!--tools:layout_constraintLeft_creator="1"-->
+	<!--tools:layout_constraintRight_creator="1"-->
+	<!--tools:layout_constraintTop_creator="1"/>-->
+
+	<Button
+		android:id="@+id/btnGetWeather"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="get weather"
+		app:layout_constraintLeft_toLeftOf="parent"
+		app:layout_constraintRight_toRightOf="parent"
+		app:layout_constraintTop_toTopOf="parent"
+		tools:layout_constraintLeft_creator="1"
+		tools:layout_constraintRight_creator="1"/>
+
+	<TextView
+		android:id="@+id/tvTemperatureLabel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:layout_marginTop="8dp"
+		android:text="Temperature:"
+		app:layout_constraintLeft_toLeftOf="parent"
+		app:layout_constraintTop_toBottomOf="@+id/btnGetWeather"/>
+
+	<TextView
+		android:id="@+id/tvTemperature"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:freezesText="true"
+		android:text="0°"
+		app:layout_constraintBaseline_toBaselineOf="@+id/tvTemperatureLabel"
+		app:layout_constraintLeft_toRightOf="@+id/tvTemperatureLabel"/>
+
+	<TextView
+		android:id="@+id/tvHumidityLabel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="Humidity:"
+		app:layout_constraintLeft_toLeftOf="@+id/tvWindSpeedLabel"
+		app:layout_constraintTop_toBottomOf="@+id/tvWindSpeedLabel"/>
+
+
+	<TextView
+		android:id="@+id/tvHumidity"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:freezesText="true"
+		android:text="0%"
+		app:layout_constraintBaseline_toBaselineOf="@+id/tvHumidityLabel"
+		app:layout_constraintLeft_toRightOf="@+id/tvHumidityLabel"/>
+
+	<TextView
+		android:id="@+id/tvWindSpeedLabel"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="Wind speed:"
+		app:layout_constraintTop_toBottomOf="@+id/tvTemperatureLabel"
+		app:layout_constraintLeft_toLeftOf="@+id/tvTemperatureLabel"/>
+
+	<TextView
+		android:id="@+id/tvWindSpeed"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="16dp"
+		android:freezesText="true"
+		android:text="0mph"
+		app:layout_constraintBaseline_toBaselineOf="@+id/tvWindSpeedLabel"
+		app:layout_constraintLeft_toRightOf="@+id/tvWindSpeedLabel"/>
+</android.support.constraint.ConstraintLayout>
