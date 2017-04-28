@@ -1,3 +1,7 @@
 <resources>
 	<string name="app_name">MvpSamples</string>
+
+	<!-- Weather presenter strings -->
+	<!-- example: "Temperature is: 25°" -->
+	<string name="weatherPresenterTemperature">Temperature is: %1$s</string>
 </resources>

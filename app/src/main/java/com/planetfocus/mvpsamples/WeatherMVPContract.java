@@ -14,7 +14,7 @@ public interface WeatherMVPContract
 	 */
 	interface WeatherMVPView
 	{
-		void showTemperature(Double temperature);
+		void showTemperature(String temperature);
 
 		void showRelativeHumidity(String humidity);
 

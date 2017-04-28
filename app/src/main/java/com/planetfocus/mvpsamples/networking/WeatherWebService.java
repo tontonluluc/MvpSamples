@@ -46,14 +46,14 @@ public class WeatherWebService
 
 					Log.d(TAG, "Temperature: "+weatherResponse.getCurrent_observation().getTemp_c());
 
-					handler.postDelayed(new Runnable()
-					{
-						@Override
-						public void run()
-						{
+//					handler.postDelayed(new Runnable()
+//					{
+//						@Override
+//						public void run()
+//						{
 							callback.dataReady(weatherResponse);
-						}
-					}, 10000L);
+//						}
+//					}, 10000L);
 
 					// call callback success
 					// callback.dataReady(weatherResponse);

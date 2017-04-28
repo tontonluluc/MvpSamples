@@ -2,7 +2,6 @@ package com.planetfocus.mvpsamples;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -19,7 +18,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherMVPCont
 	private WeatherPresenter presenter;
 
 	// the state maintainer object, used to retrieve the presenter in case of configuration change
-	private final MVPStateMaintainer mvpStateMaintainer=new MVPStateMaintainer(this.getSupportFragmentManager(), TAG);
+	//	private final MVPStateMaintainer mvpStateMaintainer=new MVPStateMaintainer(this.getSupportFragmentManager(), TAG);
 
 
 	//
@@ -37,7 +36,22 @@ public class WeatherActivity extends AppCompatActivity implements WeatherMVPCont
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_transaction_list);
 
-		buildOrRetrievePresenter();
+		PresenterBuilder<WeatherMVPContract.WeatherMVPView, WeatherPresenter> presenterPresenterBuilder=new PresenterBuilder<>();
+		presenter=presenterPresenterBuilder.buildOrRetrievePresenter((WeatherApplication)getApplication(), this, new PresenterBuilder.PresenterFactory<WeatherPresenter>()
+		{
+			@Override
+			public WeatherPresenter buildPresenter()
+			{
+				return new WeatherPresenter();
+			}
+
+
+			@Override
+			public String getPresenterTag()
+			{
+				return WeatherPresenter.class.getSimpleName();
+			}
+		});
 
 		btnGetWeather=(Button)findViewById(R.id.btnGetWeather);
 		tvTemperature=(TextView)findViewById(R.id.tvTemperature);
@@ -55,54 +69,6 @@ public class WeatherActivity extends AppCompatActivity implements WeatherMVPCont
 	}
 
 
-	private void buildOrRetrievePresenter()
-	{
-		if (mvpStateMaintainer.firstTimeIn())
-		{
-			Log.d(TAG, "onCreate() called for the first time");
-			initialize(this);
-		}
-		else
-		{
-			Log.d(TAG, "onCreate() called more than once");
-			reinitialize(this);
-		}
-	}
-
-
-	/**
-	 * Initialize relevant MVP Objects.
-	 * Creates a Presenter instance, saves the presenter in {@link MVPStateMaintainer}
-	 */
-	private void initialize(WeatherMVPContract.WeatherMVPView view)
-	{
-		presenter=new WeatherPresenter();
-		presenter.attachView(view);
-
-		mvpStateMaintainer.put(WeatherPresenter.class.getSimpleName(), presenter);
-	}
-
-
-	/**
-	 * Recovers Presenter and informs Presenter that occurred a config change.
-	 * If Presenter has been lost, recreates a instance
-	 */
-	private void reinitialize(WeatherMVPContract.WeatherMVPView view)
-	{
-		presenter=mvpStateMaintainer.get(WeatherPresenter.class.getSimpleName());
-
-		if (presenter==null)
-		{
-			Log.w(TAG, "recreating Presenter");
-			initialize(view);
-		}
-		else
-		{
-			presenter.attachView(view);
-		}
-	}
-
-
 	@Override
 	protected void onDestroy()
 	{
@@ -112,10 +78,65 @@ public class WeatherActivity extends AppCompatActivity implements WeatherMVPCont
 	}
 
 
+	//	private void buildOrRetrievePresenter()
+	//	{
+	//		if (((WeatherApplication)getApplication()).hasPresenterForKey(WeatherPresenter.class.getSimpleName()))
+	//		{
+	//			Log.d(TAG, "onCreate() called more than once");
+	//			reinitialize(this);
+	//		}
+	//		else
+	//		{
+	//			Log.d(TAG, "onCreate() called for the first time");
+	//			initialize(this);
+	//		}
+	//	}
+
+
+	//	/**
+	//	 * Initialize relevant MVP Objects.
+	//	 * Creates a Presenter instance, saves the presenter in {@link MVPStateMaintainer}
+	//	 */
+	//	private void initialize(WeatherMVPContract.WeatherMVPView view)
+	//	{
+	//		StringsUtil su=new StringsUtilImpl(this);
+	//
+	//		presenter=new WeatherPresenter();
+	//		presenter.attachView(view, su);
+	//
+	//		// using a simple object map saved in the application class
+	//		WeatherApplication weatherApplication=((WeatherApplication)getApplication());
+	//		weatherApplication.addPresenterForKey(WeatherPresenter.class.getSimpleName(), presenter);
+	//	}
+
+
+	//	/**
+	//	 * Recovers Presenter and informs Presenter that occurred a config change.
+	//	 * If Presenter has been lost, recreates a instance
+	//	 */
+	//	private void reinitialize(WeatherMVPContract.WeatherMVPView view)
+	//	{
+	//		// using a simple object map saved in the application class
+	//		WeatherApplication weatherApplication=((WeatherApplication)getApplication());
+	//		presenter=(WeatherPresenter)weatherApplication.getPresenterForKey(WeatherPresenter.class.getSimpleName());
+	//
+	//		if (presenter==null)
+	//		{
+	//			Log.w(TAG, "recreating Presenter");
+	//			initialize(view);
+	//		}
+	//		else
+	//		{
+	//			StringsUtil su=new StringsUtilImpl(this);
+	//			presenter.attachView(view, su);
+	//		}
+	//	}
+
+
 	@Override
-	public void showTemperature(Double temperature)
+	public void showTemperature(String temperature)
 	{
-		tvTemperature.setText(""+temperature);
+		tvTemperature.setText(temperature);
 	}
 
 
