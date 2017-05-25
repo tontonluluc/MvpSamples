@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 
+// some constants definitions
+ext {
+    // version of the android support library. Applies to design, appcompat, recyclerview, cardview, etc.
+    supportLibVersion = '25.3.1'
+    constraintLayoutVersion = '1.0.2'
+    archLifecycleVersion = '1.0.0-alpha1'
+    archRoomVersion = '1.0.0-alpha1'
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -23,36 +32,40 @@ dependencies {
     //
     // RETROFIT
     //
-    compile 'com.squareup.retrofit2:retrofit:2.1.0'
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile "com.squareup.retrofit2:retrofit:2.1.0"
+    compile "com.squareup.retrofit2:converter-gson:2.1.0"
 
     // the scalars converter is used to serialize your request body into non-json scalar types (ie plaintext string or scalar int)
-    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
+    compile "com.squareup.retrofit2:converter-scalars:2.1.0"
 
     // Stetho library to view the internet traffic from Chrome (chrome://inspect)
-    compile 'com.facebook.stetho:stetho:1.3.1'
-    compile 'com.facebook.stetho:stetho-okhttp3:1.3.1'
-
-
+    compile "com.facebook.stetho:stetho:1.3.1"
+    compile "com.facebook.stetho:stetho-okhttp3:1.3.1"
 
     //
     // COMPAT LIBRARIES
     //
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.android.support:appcompat-v7:${supportLibVersion}"
+    compile "com.android.support.constraint:constraint-layout:${constraintLayoutVersion}"
 
+    // to support the MVP architecture components.
+    // See https://codelabs.developers.google.com/codelabs/android-lifecycles/#0
+    // See https://developer.android.com/topic/libraries/architecture/index.html
+    compile "android.arch.lifecycle:extensions:${archLifecycleVersion}"
+    compile "android.arch.persistence.room:runtime:${archRoomVersion}"
+    annotationProcessor "android.arch.lifecycle:compiler:${archLifecycleVersion}"
+    annotationProcessor "android.arch.persistence.room:compiler:${archRoomVersion}"
 
     //
     // OTHER
     //
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-
+    compile fileTree(dir: "libs", include: ["*.jar"])
 
     //
     // TEST
     //
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
+    androidTestCompile("com.android.support.test.espresso:espresso-core:2.2.2", {
+        exclude group: "com.android.support", module: "support-annotations"
     })
-    testCompile 'junit:junit:4.12'
+    testCompile "junit:junit:4.12"
 }

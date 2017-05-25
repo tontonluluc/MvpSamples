@@ -34,7 +34,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherMVPCont
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_transaction_list);
+		setContentView(R.layout.activity_weather);
 
 		PresenterBuilder<WeatherMVPContract.WeatherMVPView, WeatherPresenter> presenterPresenterBuilder=new PresenterBuilder<>();
 		presenter=presenterPresenterBuilder.buildOrRetrievePresenter((WeatherApplication)getApplication(), this, new PresenterBuilder.PresenterFactory<WeatherPresenter>()
