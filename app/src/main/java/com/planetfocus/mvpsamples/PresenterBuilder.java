@@ -8,7 +8,6 @@ import android.util.Log;
  * <p>
  * Created by jdelpech on 4/28/17.
  */
-
 public class PresenterBuilder<V, P extends BasePresenter<V>>
 {
 	private final static String TAG=PresenterBuilder.class.getSimpleName();
@@ -16,9 +15,14 @@ public class PresenterBuilder<V, P extends BasePresenter<V>>
 
 	interface PresenterFactory<P>
 	{
+		@NonNull
 		P buildPresenter();
 
+		@NonNull
 		String getPresenterTag();
+
+		@NonNull
+		StringsUtil buildStringsUtil();
 	}
 
 
@@ -50,6 +54,13 @@ public class PresenterBuilder<V, P extends BasePresenter<V>>
 	}
 
 
+	public void clearPresenter(@NonNull WeatherApplication weatherApplication, @NonNull PresenterFactory<P> presenterFactory)
+	{
+		// using a simple object map saved in the application class
+		weatherApplication.removePresenterForKey(presenterFactory.getPresenterTag());
+	}
+
+
 	/**
 	 * Creates a new presenter for the view.
 	 *
@@ -60,7 +71,8 @@ public class PresenterBuilder<V, P extends BasePresenter<V>>
 	 */
 	private P initialize(@NonNull WeatherApplication weatherApplication, @NonNull V view, @NonNull PresenterFactory<P> presenterFactory)
 	{
-		StringsUtil stringsUtil=new StringsUtilImpl(weatherApplication.getApplicationContext());
+//		StringsUtil stringsUtil=new StringsUtilImpl(weatherApplication.getApplicationContext());
+		StringsUtil stringsUtil=presenterFactory.buildStringsUtil();
 
 		P presenter=presenterFactory.buildPresenter();
 		presenter.attachView(view, stringsUtil);

@@ -1,6 +1,7 @@
 package com.planetfocus.mvpsamples;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +21,36 @@ public class WeatherActivity extends AppCompatActivity implements WeatherMVPCont
 	// the state maintainer object, used to retrieve the presenter in case of configuration change
 	//	private final MVPStateMaintainer mvpStateMaintainer=new MVPStateMaintainer(this.getSupportFragmentManager(), TAG);
 
+	// an object that builds our presenter. uses a presenter factory to do so.
+	PresenterBuilder<WeatherMVPContract.WeatherMVPView, WeatherPresenter> presenterBuilder=new PresenterBuilder<>();
+
+	// a factory that is used to build, and in general, to manage the presenter's construction, retrieval and destruction
+	PresenterBuilder.PresenterFactory<WeatherPresenter> presenterFactory=new PresenterBuilder.PresenterFactory<WeatherPresenter>()
+	{
+		@Override
+		@NonNull
+		public WeatherPresenter buildPresenter()
+		{
+			return new WeatherPresenter();
+		}
+
+
+		@Override
+		@NonNull
+		public String getPresenterTag()
+		{
+			return WeatherPresenter.class.getSimpleName();
+		}
+
+
+		@NonNull
+		@Override
+		public StringsUtil buildStringsUtil()
+		{
+			return new StringsUtilImpl(getApplicationContext());
+		}
+	};
+
 
 	//
 	// Views
@@ -36,22 +67,7 @@ public class WeatherActivity extends AppCompatActivity implements WeatherMVPCont
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_weather);
 
-		PresenterBuilder<WeatherMVPContract.WeatherMVPView, WeatherPresenter> presenterPresenterBuilder=new PresenterBuilder<>();
-		presenter=presenterPresenterBuilder.buildOrRetrievePresenter((WeatherApplication)getApplication(), this, new PresenterBuilder.PresenterFactory<WeatherPresenter>()
-		{
-			@Override
-			public WeatherPresenter buildPresenter()
-			{
-				return new WeatherPresenter();
-			}
-
-
-			@Override
-			public String getPresenterTag()
-			{
-				return WeatherPresenter.class.getSimpleName();
-			}
-		});
+		presenter=presenterBuilder.buildOrRetrievePresenter((WeatherApplication)getApplication(), this, presenterFactory);
 
 		btnGetWeather=(Button)findViewById(R.id.btnGetWeather);
 		tvTemperature=(TextView)findViewById(R.id.tvTemperature);
@@ -73,6 +89,11 @@ public class WeatherActivity extends AppCompatActivity implements WeatherMVPCont
 	protected void onDestroy()
 	{
 		presenter.detachView();
+
+		if (isFinishing())
+		{
+			presenterBuilder.clearPresenter((WeatherApplication)getApplication(), presenterFactory);
+		}
 
 		super.onDestroy();
 	}

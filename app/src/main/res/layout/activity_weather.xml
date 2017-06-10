@@ -58,8 +58,8 @@
 		android:layout_height="wrap_content"
 		android:layout_marginTop="8dp"
 		android:text="Humidity:"
-		app:layout_constraintLeft_toLeftOf="@+id/tvWindSpeedLabel"
-		app:layout_constraintTop_toBottomOf="@+id/tvWindSpeedLabel"/>
+		app:layout_constraintLeft_toLeftOf="@+id/tvTemperatureLabel"
+		app:layout_constraintTop_toBottomOf="@+id/tvTemperatureLabel"/>
 
 
 	<TextView
@@ -78,8 +78,8 @@
 		android:layout_height="wrap_content"
 		android:layout_marginTop="8dp"
 		android:text="Wind speed:"
-		app:layout_constraintTop_toBottomOf="@+id/tvTemperatureLabel"
-		app:layout_constraintLeft_toLeftOf="@+id/tvTemperatureLabel"/>
+		app:layout_constraintLeft_toLeftOf="@+id/tvHumidityLabel"
+		app:layout_constraintTop_toBottomOf="@+id/tvHumidityLabel"/>
 
 	<TextView
 		android:id="@+id/tvWindSpeed"
@@ -90,4 +90,17 @@
 		android:text="0mph"
 		app:layout_constraintBaseline_toBaselineOf="@+id/tvWindSpeedLabel"
 		app:layout_constraintLeft_toRightOf="@+id/tvWindSpeedLabel"/>
+
+	<Button
+		android:id="@+id/btnUnsubscribe"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:text="unsubscribe"
+		app:layout_constraintLeft_toLeftOf="parent"
+		app:layout_constraintRight_toRightOf="parent"
+		app:layout_constraintTop_toBottomOf="@id/tvWindSpeedLabel"
+		tools:layout_constraintLeft_creator="1"
+		tools:layout_constraintRight_creator="1"/>
+
 </android.support.constraint.ConstraintLayout>

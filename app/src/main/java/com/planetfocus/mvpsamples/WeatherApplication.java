@@ -55,4 +55,10 @@ public class WeatherApplication extends Application
 	{
 		return presenterMap.containsKey(presenterKey);
 	}
+
+
+	public void removePresenterForKey(String presenterKey)
+	{
+		presenterMap.remove(presenterKey);
+	}
 }

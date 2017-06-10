@@ -23,9 +23,24 @@ public class WeatherActivity extends LifecycleActivity
 	// Views
 	//
 	private Button btnGetWeather;
+	private Button btnUnsubscribe;
 	private TextView tvTemperature;
 	private TextView tvHumidity;
 	private TextView tvWindSpeed;
+
+
+	//
+	// observers
+	//
+	private Observer<String> temperatureObserver=new Observer<String>()
+	{
+		@Override
+		public void onChanged(@Nullable String temperature)
+		{
+			tvTemperature.setText(temperature);
+			Log.d(TAG, "Updating weather");
+		}
+	};
 
 
 	@Override
@@ -46,6 +61,8 @@ public class WeatherActivity extends LifecycleActivity
 	private void initUserInterface()
 	{
 		btnGetWeather=(Button)findViewById(R.id.btnGetWeather);
+		btnUnsubscribe=(Button)findViewById(R.id.btnUnsubscribe);
+
 		tvTemperature=(TextView)findViewById(R.id.tvTemperature);
 		tvHumidity=(TextView)findViewById(R.id.tvHumidity);
 		tvWindSpeed=(TextView)findViewById(R.id.tvWindSpeed);
@@ -58,19 +75,20 @@ public class WeatherActivity extends LifecycleActivity
 				liveDataWeatherViewModel.getWeatherInSanFrancisco();
 			}
 		});
+
+		btnUnsubscribe.setOnClickListener(new View.OnClickListener()
+		{
+			@Override
+			public void onClick(View v)
+			{
+				liveDataWeatherViewModel.getTemperature().removeObserver(temperatureObserver);
+			}
+		});
 	}
 
 
 	private void subscribe()
 	{
-		liveDataWeatherViewModel.getTemperature().observe(this, new Observer<String>()
-		{
-			@Override
-			public void onChanged(@Nullable final String temperature)
-			{
-				tvTemperature.setText(temperature);
-				Log.d(TAG, "Updating weather");
-			}
-		});
+		liveDataWeatherViewModel.getTemperature().observe(this, temperatureObserver);
 	}
 }
