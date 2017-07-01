@@ -69,10 +69,10 @@ public class WeatherActivity extends AppCompatActivity implements WeatherMVPCont
 
 		presenter=presenterBuilder.buildOrRetrievePresenter((WeatherApplication)getApplication(), this, presenterFactory);
 
-		btnGetWeather=(Button)findViewById(R.id.btnGetWeather);
-		tvTemperature=(TextView)findViewById(R.id.tvTemperature);
-		tvHumidity=(TextView)findViewById(R.id.tvHumidity);
-		tvWindSpeed=(TextView)findViewById(R.id.tvWindSpeed);
+		btnGetWeather=findViewById(R.id.btnGetWeather);
+		tvTemperature=findViewById(R.id.tvTemperature);
+		tvHumidity=findViewById(R.id.tvHumidity);
+		tvWindSpeed=findViewById(R.id.tvWindSpeed);
 
 		btnGetWeather.setOnClickListener(new View.OnClickListener()
 		{
